@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package form;
 
+import java.sql.Connection;
+import static javax.management.remote.JMXConnectorFactory.connect;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,15 +17,15 @@ public class register extends javax.swing.JFrame {
         initComponents();
         name.requestFocus();
     }
-    
-    private void clear_input(){
-       name.setText("");
-       lastName.setText("");
-       address.setText("");
-       password.setText("");
-       userName.setText("");
+
+    private void clear_input() {
+        name.setText("");
+        lastName.setText("");
+        address.setText("");
+        password.setText("");
+        userName.setText("");
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +53,7 @@ public class register extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(240, 242, 236));
+        getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(20, 36, 84));
 
@@ -141,17 +139,17 @@ public class register extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -219,22 +217,8 @@ public class register extends javax.swing.JFrame {
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(230, 100, 375, 429);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -245,7 +229,7 @@ public class register extends javax.swing.JFrame {
         String user_name = userName.getText();
         String user_password = String.valueOf(password.getPassword());
         System.out.println(first_name);
-        
+
         clear_input();
     }//GEN-LAST:event_registerActionPerformed
 
@@ -264,14 +248,14 @@ public class register extends javax.swing.JFrame {
     }//GEN-LAST:event_addressActionPerformed
 
     private void nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameActionPerformed
-         if (name.getText().equals("")) {
+        if (name.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Error: Name is empty");
         }
         lastName.requestFocus();
     }//GEN-LAST:event_nameActionPerformed
 
     private void userNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameActionPerformed
-         if (userName.getText().equals("")) {
+        if (userName.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Error: Name is empty");
         }
         password.requestFocus();
@@ -334,4 +318,7 @@ public class register extends javax.swing.JFrame {
     private javax.swing.JButton register;
     private javax.swing.JTextField userName;
     // End of variables declaration//GEN-END:variables
+    
+    connect cc = new connect();
+        Connection cn = cc.conexion();
 }
