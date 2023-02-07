@@ -5,7 +5,6 @@
  */
 package database;
 
-import form.login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
 public class empleadoM {
 
+    Connection cursor;
+
     public empleadoM(Connection cn) {
-        Connection cursor = cn;
+        cursor = cn;
     }
 
     public void empleado_table(Connection cn) {
@@ -62,7 +62,7 @@ public class empleadoM {
             String query = "SELECT code_empleado, password from empleados where code_empleado='" + codeEmpleado + "'and password='" + userPassword + "'";
             PreparedStatement sqlquery = cn.prepareStatement(query);
             ResultSet n = sqlquery.executeQuery(query);
-            if(!n.next()){
+            if (!n.next()) {
                 JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
                 return false;
             }
@@ -72,5 +72,36 @@ public class empleadoM {
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
         }
         return true;
+    }
+
+    public void delete_empleado(String codeEmpleado) {
+        try {
+            String query = "DELETE FROM empleados where code_empleado='" + codeEmpleado + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate(query);
+            System.out.println(n);
+//            if (!n.next()) {
+//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+//            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+    }
+
+    public void update_empleado(String id, String last_name, String first_name, int age, String Address) {
+        try {
+            String query = "UPDATE empleado SET last_name='" + last_name + "', first_name='" + first_name + "',  where code_empleado='" + id + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            ResultSet n = sqlquery.executeQuery(query);
+            if (!n.next()) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
     }
 }

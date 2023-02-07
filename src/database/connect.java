@@ -19,7 +19,7 @@ public class connect {
     public Connection conexion() {
         try {
             connect = DriverManager.getConnection("jdbc:mysql://localhost:23306/sistema-facturacion", "user", "root");
-            JOptionPane.showMessageDialog(null, "Database Connected");
+            System.out.println("Database Connected");
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al connectarse a la base de datos");
             System.out.println(e);
