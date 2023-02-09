@@ -90,17 +90,17 @@ public class empleadoM {
         return true;
     }
 
-    public void update_empleado(String id, String last_name, String first_name,
-            int age, String Address) {
+    public void update_empleado(String code, String last_name, String first_name,
+            int age, String address, String cargo) {
         try {
-            String query = "UPDATE empleado SET last_name='" + last_name + "',"
-                    + " first_name='" + first_name + "',  where code_empleado='" + id + "'";
+            String query = "UPDATE empleados SET last_name='" + last_name + "', first_name='" + first_name +"', age='" + age + "', address='" + address + "' ,cargo='" + cargo + "' where code_empleado='" + code + "'";
             PreparedStatement sqlquery;
             sqlquery = cursor.prepareStatement(query);
-            ResultSet n = sqlquery.executeQuery(query);
-            if (!n.next()) {
+            int n = sqlquery.executeUpdate(query);
+            if (n != 1) {
                 JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
             }
+            JOptionPane.showMessageDialog(null, "Empleado actualizado con exito");
         } catch (SQLException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
@@ -121,4 +121,20 @@ public class empleadoM {
         }
         return res;
     }
+
+    public ResultSet getEmpleado(String code) {
+        ResultSet res = null;
+        try {
+            String query = "SELECT * from empleados where code_empleado='" + code + "'";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
+    }
+
 }
