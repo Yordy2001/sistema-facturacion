@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,6 +27,7 @@ public class empleadoM {
                     + "    age int,\n"
                     + "    address varchar(255) NOT NULL ,\n"
                     + "    code_empleado varchar(255),\n"
+                    + "    cargo varchar(255),\n"
                     + "    password varchar(255),\n"
                     + "    PRIMARY KEY (ID)"
                     + ");";
@@ -42,15 +39,16 @@ public class empleadoM {
         }
     }
 
-    public void insertEmpleado(Connection cn, String last_name, String first_name, int age, String Address, String code_empleado, String user_password) {
+    public void insertEmpleado(Connection cn, String last_name, String first_name,
+            int age, String Address, String code_empleado, String user_password, String cargo) {
         try {
             String query = "INSERT INTO empleados(last_name,"
-                    + " first_name, age, address, code_empleado, password) VALUES"
+                    + " first_name, age, address, code_empleado, password, cargo ) VALUES"
                     + "('" + last_name + "', '" + first_name + "', '" + age + "','"
-                    + Address + "', '" + code_empleado + "', '" + user_password + "');";
+                    + Address + "', '" + code_empleado + "', '" + user_password + "', '" + cargo + "');";
             PreparedStatement sqlquery = cn.prepareStatement(query);
             int n = sqlquery.executeUpdate();
-
+            JOptionPane.showMessageDialog(null, "Empleado agregado!");
         } catch (SQLException e) {
             System.out.print(e);
             JOptionPane.showMessageDialog(null, "Error de base de datos");
@@ -59,7 +57,8 @@ public class empleadoM {
 
     public boolean login_db(Connection cn, String codeEmpleado, String userPassword) {
         try {
-            String query = "SELECT code_empleado, password from empleados where code_empleado='" + codeEmpleado + "'and password='" + userPassword + "'";
+            String query = "SELECT code_empleado, password from empleados"
+                    + " where code_empleado='" + codeEmpleado + "'and password='" + userPassword + "'";
             PreparedStatement sqlquery = cn.prepareStatement(query);
             ResultSet n = sqlquery.executeQuery(query);
             if (!n.next()) {
@@ -74,25 +73,28 @@ public class empleadoM {
         return true;
     }
 
-    public void delete_empleado(String codeEmpleado) {
+    public boolean delete_empleado(String codeEmpleado) {
         try {
             String query = "DELETE FROM empleados where code_empleado='" + codeEmpleado + "'";
             PreparedStatement sqlquery;
             sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate(query);
-            System.out.println(n);
-//            if (!n.next()) {
-//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
-//            }
+            if (n != 1) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
         } catch (SQLException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+            return false;
         }
+        return true;
     }
 
-    public void update_empleado(String id, String last_name, String first_name, int age, String Address) {
+    public void update_empleado(String id, String last_name, String first_name,
+            int age, String Address) {
         try {
-            String query = "UPDATE empleado SET last_name='" + last_name + "', first_name='" + first_name + "',  where code_empleado='" + id + "'";
+            String query = "UPDATE empleado SET last_name='" + last_name + "',"
+                    + " first_name='" + first_name + "',  where code_empleado='" + id + "'";
             PreparedStatement sqlquery;
             sqlquery = cursor.prepareStatement(query);
             ResultSet n = sqlquery.executeQuery(query);
@@ -103,5 +105,20 @@ public class empleadoM {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
         }
+    }
+
+    public ResultSet getEmpleados() {
+        ResultSet res = null;
+        try {
+            String query = "SELECT * from empleados";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
     }
 }

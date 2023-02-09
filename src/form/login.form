@@ -132,6 +132,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="login_jPanel4"/>
+          </AuxValues>
 
           <Layout>
             <DimensionLayout dim="0">

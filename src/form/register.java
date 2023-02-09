@@ -237,7 +237,8 @@ public class register extends javax.swing.JFrame {
         String code_empleado = codeEmpleado.getText();
         String user_password = String.valueOf(password.getPassword());
         int age = 15;
-        this.empleado.insertEmpleado(cn, last_name, first_name, age, Address, code_empleado, user_password);
+        String cargo = "empleado";
+        this.empleado.insertEmpleado(cn, last_name, first_name, age, Address, code_empleado, user_password, cargo);
         clear_input();
     }//GEN-LAST:event_registerActionPerformed
 
