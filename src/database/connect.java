@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 //import empleadoM;
@@ -30,6 +25,8 @@ public class connect {
     public connect() {
         Connection cn = conexion();
         empleadoM empleado = new empleadoM(cn);
+        Articulo articulo = new Articulo(cn);
+        articulo.articuloTable();
         empleado.empleado_table(cn);
     }
 
