@@ -16,7 +16,6 @@ public class Articulo {
         cursor = cn;
     }
 
-
     public void articuloTable() {
         try {
             String query = "CREATE TABLE if not exists articulos(\n"
@@ -39,6 +38,40 @@ public class Articulo {
         }
     }
 
+    public ResultSet getArticulos() {
+        ResultSet res = null;
+        try {
+            String query = "SELECT name, description, code, cantidad, precio_venta,"
+                    + " precio_compra, itbis, articulo_category.category as category FROM articulos"
+                    + " JOIN articulo_category ON articulos.id_category = articulo_category.id";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
+    }
+
+    public ResultSet getArticulo(String id) {
+        ResultSet res = null;
+        try {
+            String query = "SELECT name, description, code, cantidad, precio_venta,"
+                    + " precio_compra, itbis, articulos_category.category FROM articulos"
+                    + " JOIN articulo_category ON articulos.id_category = articulo_category.id"
+                    + " WHERE articulos.id= '" + id + "'";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
+    }
 //    public void insertArticulo(String last_name, String first_name,
 //            int age, String Address, String code_empleado, String user_password, String cargo) {
 //        try {
@@ -55,7 +88,6 @@ public class Articulo {
 //            JOptionPane.showMessageDialog(null, "Error de base de datos");
 //        }
 //    }
-
 
 //
 //    public boolean delete_empleado(String codeEmpleado) {
@@ -92,37 +124,4 @@ public class Articulo {
 //        }
 //    }
 //
-    public ResultSet getArticulo(int id) {
-        ResultSet res = null;
-        try {
-            String query = "SELECT name, description, code, cantidad, precio_venta,"
-                    + " precio_compra, itbis, articulos_category.category FROM articulos"
-                    + " JOIN articulo_category ON articulos.id_category = articulo_category.id"
-                    + " WHERE articulos.id= '"+ id +"'";
-            PreparedStatement sqlquery = cursor.prepareStatement(query);
-            res = sqlquery.executeQuery(query);
-
-            return res;
-        } catch (SQLException e) {
-            System.out.println(e);
-            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-        }
-        return res;
-    }
-//
-//    public ResultSet getEmpleado(String code) {
-//        ResultSet res = null;
-//        try {
-//            String query = "SELECT * from empleados where code_empleado='" + code + "'";
-//            PreparedStatement sqlquery = cursor.prepareStatement(query);
-//            res = sqlquery.executeQuery(query);
-//
-//            return res;
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//        return res;
-//    }
-
 }
