@@ -1,9 +1,12 @@
 package form;
 
+import javax.swing.JInternalFrame;
+import vistas.admin_articulos;
 import vistas.admin_empleados;
 
 public class admin extends javax.swing.JFrame {
-
+    
+    JInternalFrame internatView;
     public admin() {
         initComponents();
         this.setResizable(false);
@@ -24,8 +27,8 @@ public class admin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btn_empleados = new javax.swing.JButton();
+        btn_articulos = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -92,20 +95,25 @@ public class admin extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 204));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("EMPLEADOS");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_empleados.setBackground(new java.awt.Color(0, 153, 204));
+        btn_empleados.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btn_empleados.setForeground(new java.awt.Color(255, 255, 255));
+        btn_empleados.setText("EMPLEADOS");
+        btn_empleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_empleadosActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(0, 153, 204));
-        jButton4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("ARTICULOS");
+        btn_articulos.setBackground(new java.awt.Color(0, 153, 204));
+        btn_articulos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btn_articulos.setForeground(new java.awt.Color(255, 255, 255));
+        btn_articulos.setText("ARTICULOS");
+        btn_articulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_articulosActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(0, 153, 204));
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -151,8 +159,8 @@ public class admin extends javax.swing.JFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_articulos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_empleados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(salir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE))
@@ -168,9 +176,9 @@ public class admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_empleados, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_articulos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -236,11 +244,25 @@ public class admin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_salirActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_empleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_empleadosActionPerformed
         admin_empleados interEmpleado = new admin_empleados();
-        jP_interform.add(interEmpleado);
+        if(internatView != null){
+            internatView.setVisible(false);
+        }
+        internatView = interEmpleado;
+        jP_interform.add(internatView);
         interEmpleado.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btn_empleadosActionPerformed
+
+    private void btn_articulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_articulosActionPerformed
+        admin_articulos interArticulos = new admin_articulos();
+        if(internatView != null){
+            internatView.setVisible(false);
+        }
+        internatView = interArticulos;
+        jP_interform.add(internatView);
+        interArticulos.setVisible(true);
+    }//GEN-LAST:event_btn_articulosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -273,10 +295,10 @@ public class admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_articulos;
+    private javax.swing.JButton btn_empleados;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
