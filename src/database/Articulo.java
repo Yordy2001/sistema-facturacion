@@ -96,23 +96,23 @@ public class Articulo {
         }
     }
 //
-//    public boolean delete_empleado(String codeEmpleado) {
-//        try {
-//            String query = "DELETE FROM empleados where code_empleado='" + codeEmpleado + "'";
-//            PreparedStatement sqlquery;
-//            sqlquery = cursor.prepareStatement(query);
-//            int n = sqlquery.executeUpdate(query);
-//            if (n != 1) {
-//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//            return false;
-//        }
-//        return true;
-//    }
-//
+    public boolean deleteArticulo(String ArticleCode) {
+        try {
+            String query = "DELETE FROM articulos where code='" + ArticleCode + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate(query);
+            if (n != 1) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+            return false;
+        }
+        return true;
+    }
+
 //    public void update_empleado(String code, String last_name, String first_name,
 //            int age, String address, String cargo) {
 //        try {
