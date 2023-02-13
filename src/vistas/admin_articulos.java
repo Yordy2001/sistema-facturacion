@@ -386,12 +386,12 @@ public class admin_articulos extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-//        int row;
-//        row = jt_articulos.getSelectedRow();
-//        String code = jt_articulos.getValueAt(row, 0).toString();
-//        this.empleado.delete_empleado(code);
-//        fillTable();
-//        JOptionPane.showMessageDialog(null, "EMPLEADO ELIMINADO CON EXITO");
+        int row;
+        row = jt_articulos.getSelectedRow();
+        String code = jt_articulos.getValueAt(row, 0).toString();
+        this.articulo.deleteArticulo(code);
+        fillTable();
+        JOptionPane.showMessageDialog(null, "EMPLEADO ELIMINADO CON EXITO");
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
