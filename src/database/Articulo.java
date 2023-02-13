@@ -42,8 +42,9 @@ public class Articulo {
         ResultSet res = null;
         try {
             String query = "SELECT name, description, code, cantidad, precio_venta,"
-                    + " precio_compra, itbis, articulo_category.category as category FROM articulos"
-                    + " JOIN articulo_category ON articulos.id_category = articulo_category.id";
+                    + " precio_compra, articulo_category.category as category, art_itbis.itbis as itbis FROM articulos"
+                    + " JOIN articulo_category ON articulos.id_category = articulo_category.id"
+                    + " JOIN art_itbis ON articulos.itbis = art_itbis.id;";
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             res = sqlquery.executeQuery(query);
 
@@ -72,23 +73,36 @@ public class Articulo {
         }
         return res;
     }
-//    public void insertArticulo(String last_name, String first_name,
-//            int age, String Address, String code_empleado, String user_password, String cargo) {
-//        try {
-//            String query = "INSERT INTO articulos(last_name,"
-//                    + " first_name, age, address, code_empleado, password, cargo ) VALUES"
-//                    + "('" + last_name + "', '" + first_name + "', '" + age + "','"
-//                    + Address + "', '" + code_empleado + "', '" + user_password + "', '" + cargo + "');";
-//            
-//            PreparedStatement sqlquery = cursor.prepareStatement(query);
-//            int n = sqlquery.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Empleado agregado!");
-//        } catch (SQLException e) {
-//            System.out.print(e);
-//            JOptionPane.showMessageDialog(null, "Error de base de datos");
-//        }
-//    }
 
+    public void insertArticulo(String name, String description, String code,
+            int cantidad, float precio_venta, float precio_compra, String itbi, String category) {
+
+        //Get category id to relation article  
+        try {
+            String query1 = "SELECT id FROM articulo_category WHERE category='" + category + "'";
+            PreparedStatement sqlquery1 = cursor.prepareStatement(query1);
+            ResultSet n1 = sqlquery1.executeQuery(query1);
+            String id = n1.getString("id");
+
+            String queryItbis = "SELECT id FROM art_itbis WHERE itbis='" + itbi + "'";
+            PreparedStatement sqlqueryItbis = cursor.prepareStatement(query1);
+            ResultSet Itbis = sqlqueryItbis.executeQuery(queryItbis);
+            String itbis = Itbis.getString("id");
+         
+
+            String query = "INSERT INTO articulos(name,"
+                    + " description, code, cantidad, precio_compra, precio_venta, itbis, id_category ) VALUES"
+                    + "('" + name + "', '" + description + "', '" + code + "','"
+                    + cantidad + "', '" + precio_compra + "', '" + precio_venta + "', '" + itbis + "', '" + id + "');";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Empleado agregado!");
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Error de base de datos");
+        }
+    }
 //
 //    public boolean delete_empleado(String codeEmpleado) {
 //        try {

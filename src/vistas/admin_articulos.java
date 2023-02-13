@@ -1,6 +1,7 @@
 package vistas;
 
 import database.Articulo;
+import database.ItbisM;
 import database.connect;
 import database.empleadoM;
 import java.sql.Connection;
@@ -14,11 +15,13 @@ import javax.swing.table.DefaultTableModel;
 public class admin_articulos extends javax.swing.JInternalFrame {
 
     Articulo articulo;
+    ItbisM itbisModel;
 
     public admin_articulos() {
         initComponents();
 
         articulo = new Articulo(cn);
+        itbisModel = new ItbisM(cn);
         fillComboBox();
         fillTable();
     }
@@ -33,12 +36,20 @@ public class admin_articulos extends javax.swing.JInternalFrame {
     }
 
     public void fillComboBox() {
-        ResultSet articulos = articulo.getArticulos();
+        ResultSet itbis = itbisModel.getArticulos();
+        ResultSet category = itbisModel.getCategories();
         try {
-            while (articulos.next()) {
-                cb_itbis.addItem(articulos.getString("itbis"));
-                cb_category.addItem(articulos.getString("category"));
-                
+            while (itbis.next()) {
+                cb_itbis.addItem(itbis.getString("itbis"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        try {
+            while (category.next()) {
+                cb_category.addItem(category.getString("category"));
             }
 
         } catch (SQLException e) {
@@ -85,7 +96,6 @@ public class admin_articulos extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_artName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_precioCompra = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         txt_articuloCode = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -98,6 +108,7 @@ public class admin_articulos extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         cb_category = new javax.swing.JComboBox<>();
+        txt_precioCompra = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         btn_agregar = new javax.swing.JButton();
         btn_actualizar = new javax.swing.JButton();
@@ -152,12 +163,6 @@ public class admin_articulos extends javax.swing.JInternalFrame {
 
         jLabel4.setText("PRE. COMPRA");
 
-        txt_precioCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_precioCompraActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("CODE");
 
         jLabel3.setText("PRE. VENTA");
@@ -194,6 +199,12 @@ public class admin_articulos extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_precioCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_precioCompraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -211,11 +222,11 @@ public class admin_articulos extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_precioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(txt_artName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txt_artName, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_precioCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,11 +273,11 @@ public class admin_articulos extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(cb_itbis, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_precioCompra)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_precioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_precioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_precioCompra)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -397,14 +408,16 @@ public class admin_articulos extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_actualizarActionPerformed
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed
-        String first_name = txt_artName.getText();
-        String last_name = txt_articuloDesc.getText();
-        String Address = txt_stock.getText();
-        String code_empleado = txt_articuloCode.getText();
-        String user_password = String.valueOf(txt_precioCompra.getPassword());
-        int age = Integer.parseInt(txt_precioVenta.getText());
-        String cargo = (String) cb_itbis.getSelectedItem();
-//        this.empleado.insertEmpleado(cn, last_name, first_name, age, Address, code_empleado, user_password, cargo);
+        String name = txt_artName.getText();
+        String description = txt_articuloDesc.getText();
+        int cantidad = Integer.parseInt(txt_stock.getText());
+        String code = txt_articuloCode.getText();
+        float precio_compra = Float.parseFloat(txt_precioCompra.getText());
+        float precio_venta = Float.parseFloat(txt_precioVenta.getText());
+        String itbis = (String) cb_itbis.getSelectedItem();
+        String category = (String) cb_itbis.getSelectedItem();
+        this.articulo.insertArticulo(name, description, code,
+                cantidad, precio_venta, precio_compra, itbis, category);
         fillTable();
         clear_input();
     }//GEN-LAST:event_btn_agregarActionPerformed
@@ -443,10 +456,6 @@ public class admin_articulos extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_cb_itbisActionPerformed
 
-    private void txt_precioCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioCompraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_precioCompraActionPerformed
-
     private void jt_articulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_articulosMouseClicked
         int row;
         row = jt_articulos.getSelectedRow();
@@ -471,6 +480,10 @@ public class admin_articulos extends javax.swing.JInternalFrame {
     private void txt_stockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stockActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_stockActionPerformed
+
+    private void txt_precioCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_precioCompraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_precioCompraActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -498,7 +511,7 @@ public class admin_articulos extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txt_articuloCode;
     private javax.swing.JTextField txt_articuloDesc;
     private javax.swing.JPanel txt_name;
-    private javax.swing.JPasswordField txt_precioCompra;
+    private javax.swing.JTextField txt_precioCompra;
     private javax.swing.JTextField txt_precioVenta;
     private javax.swing.JTextField txt_stock;
     // End of variables declaration//GEN-END:variables
