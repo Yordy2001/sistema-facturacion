@@ -67,6 +67,21 @@ public class Customer {
         return res;
     }
 
+        public ResultSet getCustomer(String code) {
+        ResultSet res = null;
+        try {
+            String query = "SELECT * from customer where cedula='" + code + "'";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
+    }
+    
 //    public boolean delete_empleado(String codeEmpleado) {
 //        try {
 //            String query = "DELETE FROM empleados where code_empleado='" + codeEmpleado + "'";
@@ -116,19 +131,6 @@ public class Customer {
 //        return res;
 //    }
 //
-//    public ResultSet getEmpleado(String code) {
-//        ResultSet res = null;
-//        try {
-//            String query = "SELECT * from empleados where code_empleado='" + code + "'";
-//            PreparedStatement sqlquery = cursor.prepareStatement(query);
-//            res = sqlquery.executeQuery(query);
-//
-//            return res;
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//        return res;
-//    }
+
 
 }
