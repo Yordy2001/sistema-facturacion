@@ -37,21 +37,21 @@ public class Customer {
         }
     }
 
-//    public void insertEmpleado(Connection cn, String last_name, String first_name,
-//            int age, String Address, String code_empleado, String user_password, String cargo) {
-//        try {
-//            String query = "INSERT INTO empleados(last_name,"
-//                    + " first_name, age, address, code_empleado, password, cargo ) VALUES"
-//                    + "('" + last_name + "', '" + first_name + "', '" + age + "','"
-//                    + Address + "', '" + code_empleado + "', '" + user_password + "', '" + cargo + "');";
-//            PreparedStatement sqlquery = cn.prepareStatement(query);
-//            int n = sqlquery.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Empleado agregado!");
-//        } catch (SQLException e) {
-//            System.out.print(e);
-//            JOptionPane.showMessageDialog(null, "Error de base de datos");
-//        }
-//    }
+    public void insertCustomer(String last_name, String first_name,
+            int age, String Address, String cedula, String credito) {
+        try {
+            String query = "INSERT INTO customer(last_name,"
+                    + " first_name, age, address, cedula, password, cargo ) VALUES"
+                    + "('" + last_name + "', '" + first_name + "', '" + age + "','"
+                    + Address + "', '" + cedula + "');";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Cliente agregado!");
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Error de base de datos");
+        }
+    }
 //
 //    public boolean login_db(Connection cn, String codeEmpleado, String userPassword) {
 //        try {
