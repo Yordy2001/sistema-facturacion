@@ -75,29 +75,21 @@ public class Articulo {
     }
 
     public void insertArticulo(String name, String description, String code,
-            int cantidad, float precio_venta, float precio_compra, String itbi, String category) {
+            int cantidad, float precio_venta, float precio_compra, String itbis, String category) {
 
+        String category_id = this.getCategory(category);
+        String itbisId = this.getItbis(itbis);
         //Get category id to relation article  
         try {
-            String query1 = "SELECT id FROM articulo_category WHERE category='" + category + "'";
-            PreparedStatement sqlquery1 = cursor.prepareStatement(query1);
-            ResultSet n1 = sqlquery1.executeQuery(query1);
-            String id = n1.getString("id");
-
-            String queryItbis = "SELECT id FROM art_itbis WHERE itbis='" + itbi + "'";
-            PreparedStatement sqlqueryItbis = cursor.prepareStatement(query1);
-            ResultSet Itbis = sqlqueryItbis.executeQuery(queryItbis);
-            String itbis = Itbis.getString("id");
-         
 
             String query = "INSERT INTO articulos(name,"
                     + " description, code, cantidad, precio_compra, precio_venta, itbis, id_category ) VALUES"
                     + "('" + name + "', '" + description + "', '" + code + "','"
-                    + cantidad + "', '" + precio_compra + "', '" + precio_venta + "', '" + itbis + "', '" + id + "');";
+                    + cantidad + "', '" + precio_compra + "', '" + precio_venta + "', '" + itbisId + "', '" + category_id + "');";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Empleado agregado!");
+            JOptionPane.showMessageDialog(null, "Articulo agregado!");
         } catch (SQLException e) {
             System.out.print(e);
             JOptionPane.showMessageDialog(null, "Error de base de datos");
@@ -137,5 +129,41 @@ public class Articulo {
 //            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
 //        }
 //    }
-//
+
+    private String getItbis(String itbi) {
+        String itbisId = null;
+        //Get category id to relation article  
+        try {
+            String query = "SELECT id FROM art_itbis WHERE itbis='" + itbi + "'";
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet rs = sqlquery.executeQuery(query);
+            if (rs.next()) {
+                itbisId = rs.getString("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Error de base de datos");
+        }
+        return itbisId;
+    }
+
+    private String getCategory(String category) {
+        String categoryId = null;
+        //Get category id
+        try {
+            String query = "SELECT id FROM articulo_category WHERE category='" + category + "'";
+            PreparedStatement sqlqueryItbis = cursor.prepareStatement(query);
+            ResultSet Itbis = sqlqueryItbis.executeQuery(query);
+            if (Itbis.next()) {
+                categoryId = Itbis.getString("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Error de base de datos");
+        }
+        return categoryId;
+    }
+
 }

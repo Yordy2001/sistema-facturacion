@@ -415,7 +415,7 @@ public class admin_articulos extends javax.swing.JInternalFrame {
         float precio_compra = Float.parseFloat(txt_precioCompra.getText());
         float precio_venta = Float.parseFloat(txt_precioVenta.getText());
         String itbis = (String) cb_itbis.getSelectedItem();
-        String category = (String) cb_itbis.getSelectedItem();
+        String category = (String) cb_category.getSelectedItem();
         this.articulo.insertArticulo(name, description, code,
                 cantidad, precio_venta, precio_compra, itbis, category);
         fillTable();
