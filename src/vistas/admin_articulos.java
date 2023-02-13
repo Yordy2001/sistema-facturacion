@@ -3,12 +3,9 @@ package vistas;
 import database.Articulo;
 import database.ItbisM;
 import database.connect;
-import database.empleadoM;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -391,20 +388,23 @@ public class admin_articulos extends javax.swing.JInternalFrame {
         String code = jt_articulos.getValueAt(row, 0).toString();
         this.articulo.deleteArticulo(code);
         fillTable();
-        JOptionPane.showMessageDialog(null, "EMPLEADO ELIMINADO CON EXITO");
+        JOptionPane.showMessageDialog(null, "ARTICULO ELIMINADO CON EXITO");
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
-//        String first_name = txt_artName.getText();
-//        String last_name = txt_articuloDesc.getText();
-//        String Address = txt_stock.getText();
-//        String code = txt_articuloCode.getText();
-//        int age = Integer.parseInt(txt_precioVenta.getText());
-//        String cargo = (String) cb_itbis.getSelectedItem();
-//        this.empleado.update_empleado(code, last_name,  first_name,
-//            age, Address, cargo);
-//        fillTable();
-//        clear_input();
+        String name = txt_artName.getText();
+        String description = txt_articuloDesc.getText();
+        int cantidad = Integer.parseInt(txt_stock.getText());
+        String code = txt_articuloCode.getText();
+        float precio_compra = Float.parseFloat(txt_precioCompra.getText());
+        float precio_venta = Float.parseFloat(txt_precioVenta.getText());
+        String itbis = (String) cb_itbis.getSelectedItem();
+        String category = (String) cb_category.getSelectedItem();
+
+        this.articulo.updateArticulo(code, name, description,
+                cantidad, precio_compra, precio_venta, itbis, category);
+        fillTable();
+        clear_input();
     }//GEN-LAST:event_btn_actualizarActionPerformed
 
     private void btn_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agregarActionPerformed

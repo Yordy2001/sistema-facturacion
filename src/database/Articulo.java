@@ -96,6 +96,7 @@ public class Articulo {
         }
     }
 //
+
     public boolean deleteArticulo(String ArticleCode) {
         try {
             String query = "DELETE FROM articulos where code='" + ArticleCode + "'";
@@ -113,22 +114,28 @@ public class Articulo {
         return true;
     }
 
-//    public void update_empleado(String code, String last_name, String first_name,
-//            int age, String address, String cargo) {
-//        try {
-//            String query = "UPDATE empleados SET last_name='" + last_name + "', first_name='" + first_name + "', age='" + age + "', address='" + address + "' ,cargo='" + cargo + "' where code_empleado='" + code + "'";
-//            PreparedStatement sqlquery;
-//            sqlquery = cursor.prepareStatement(query);
-//            int n = sqlquery.executeUpdate(query);
-//            if (n != 1) {
-//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
-//            }
-//            JOptionPane.showMessageDialog(null, "Empleado actualizado con exito");
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//    }
+    public void updateArticulo(String code, String name, String description,
+            int cantidad, float precio_compra, float precio_venta, String itbis, String id_category) {
+        String category_id = this.getCategory(id_category);
+        String itbisId = this.getItbis(itbis);
+
+        try {
+            String query = "UPDATE articulos SET name='" + name + "', description='" + description + "',"
+                    + " cantidad='" + cantidad + "', precio_compra='" + precio_compra + "',"
+                    + "precio_venta='" + precio_venta + "', itbis='" + itbisId + "',id_category ='" + category_id + "' "
+                    + " where code='" + code + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate(query);
+            if (n != 1) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
+            JOptionPane.showMessageDialog(null, "ARTICULO actualizado con exito");
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+    }
 
     private String getItbis(String itbi) {
         String itbisId = null;
