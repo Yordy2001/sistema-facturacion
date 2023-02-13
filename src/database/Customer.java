@@ -52,25 +52,21 @@ public class Customer {
             JOptionPane.showMessageDialog(null, "Error de base de datos");
         }
     }
-//
-//    public boolean login_db(Connection cn, String codeEmpleado, String userPassword) {
-//        try {
-//            String query = "SELECT code_empleado, password from empleados"
-//                    + " where code_empleado='" + codeEmpleado + "'and password='" + userPassword + "'";
-//            PreparedStatement sqlquery = cn.prepareStatement(query);
-//            ResultSet n = sqlquery.executeQuery(query);
-//            if (!n.next()) {
-//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
-//                return false;
-//            }
-//            return true;
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//        return true;
-//    }
-//
+
+    public ResultSet getCustomers() {
+        ResultSet res = null;
+        try {
+            String query = "SELECT * from customer";
+            PreparedStatement sqlquery = this.cursor.prepareStatement(query);
+            res = sqlquery.executeQuery(query);
+            return res;
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return res;
+    }
+
 //    public boolean delete_empleado(String codeEmpleado) {
 //        try {
 //            String query = "DELETE FROM empleados where code_empleado='" + codeEmpleado + "'";
