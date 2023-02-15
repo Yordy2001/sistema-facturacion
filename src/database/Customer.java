@@ -41,9 +41,9 @@ public class Customer {
             int age, String Address, String cedula, String credito) {
         try {
             String query = "INSERT INTO customer(last_name,"
-                    + " first_name, age, address, cedula, password, cargo ) VALUES"
+                    + " first_name, age, address, cedula, credito ) VALUES"
                     + "('" + last_name + "', '" + first_name + "', '" + age + "','"
-                    + Address + "', '" + cedula + "');";
+                    + Address + "', '" + cedula + "', '" + credito + "');";
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate();
             JOptionPane.showMessageDialog(null, "Cliente agregado!");
@@ -67,7 +67,7 @@ public class Customer {
         return res;
     }
 
-        public ResultSet getCustomer(String code) {
+    public ResultSet getCustomer(String code) {
         ResultSet res = null;
         try {
             String query = "SELECT * from customer where cedula='" + code + "'";
@@ -81,7 +81,7 @@ public class Customer {
         }
         return res;
     }
-    
+
     public boolean deleteCustomer(String cedula) {
         try {
             String query = "DELETE FROM customer where cedula='" + cedula + "'";
@@ -98,39 +98,24 @@ public class Customer {
         }
         return true;
     }
-//
-//    public void update_empleado(String code, String last_name, String first_name,
-//            int age, String address, String cargo) {
-//        try {
-//            String query = "UPDATE empleados SET last_name='" + last_name + "', first_name='" + first_name +"', age='" + age + "', address='" + address + "' ,cargo='" + cargo + "' where code_empleado='" + code + "'";
-//            PreparedStatement sqlquery;
-//            sqlquery = cursor.prepareStatement(query);
-//            int n = sqlquery.executeUpdate(query);
-//            if (n != 1) {
-//                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
-//            }
-//            JOptionPane.showMessageDialog(null, "Empleado actualizado con exito");
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//    }
-//
-//    public ResultSet getEmpleados() {
-//        ResultSet res = null;
-//        try {
-//            String query = "SELECT * from empleados";
-//            PreparedStatement sqlquery = cursor.prepareStatement(query);
-//            res = sqlquery.executeQuery(query);
-//
-//            return res;
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
-//        }
-//        return res;
-//    }
-//
 
+    public void updateCustomer(String cedula, String last_name, String first_name,
+            int age, String address, String credito) {
+        try {
+            String query = "UPDATE customer SET last_name='" + last_name + "',"
+                    + " first_name='" + first_name + "', age='" + age + "', address='" + address + "',"
+                    + "credito='" + credito + "' where cedula='" + cedula + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate(query);
+            if (n != 1) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
+            JOptionPane.showMessageDialog(null, "Empleado actualizado con exito");
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+    }
 
 }

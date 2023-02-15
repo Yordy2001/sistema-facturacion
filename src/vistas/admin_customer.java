@@ -1,5 +1,6 @@
 package vistas;
 
+import database.Customer;
 import database.connect;
 import database.empleadoM;
 import java.awt.Dimension;
@@ -11,16 +12,15 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class admin_empleados extends javax.swing.JInternalFrame {
+public class admin_customer extends javax.swing.JInternalFrame {
 
-    empleadoM empleado;
+    Customer customer;
 
-    public admin_empleados() {
+    public admin_customer() {
         initComponents();
 //        this.setSize(new Dimension(1600, 900));
+        this.customer = new Customer(cn);
 
-        empleado = new empleadoM(cn);
-        fillComboBox();
         fillTable();
     }
 
@@ -28,36 +28,29 @@ public class admin_empleados extends javax.swing.JInternalFrame {
         txt_nombre.setText("");
         txt_lastName.setText("");
         txt_addres.setText("");
-        txt_code.setText("");
-        txt_pass.setText("");
+        txt_cedula.setText("");
+        txt_credito.setText("");
         txt_age.setText("");
-    }
-
-    public void fillComboBox() {
-        String[] permisos = {"SUP.ALMACEN", "GERENTE", "SUPERVISOR", "CONTADOR", "CAJERA"};
-        for (int i = 0; i < 5; i++) {
-            cb_cargo.addItem(permisos[i]);
-        }
     }
 
     //llenar la tabla de los empleados con los datos de la base de datos.
     public void fillTable() {
-        ResultSet empleados = empleado.getEmpleados();
-        DefaultTableModel tableData = (DefaultTableModel) jt_empleados.getModel();
+        ResultSet customer = this.customer.getCustomers();
+        DefaultTableModel tableData = (DefaultTableModel) jt_customer.getModel();
         //Limpiar la tabla antes de introducir los datos
         tableData.setRowCount(0);
         String[] registros = new String[7];
         try {
-            while (empleados.next()) {
-                registros[0] = empleados.getString("code_empleado");
-                registros[1] = empleados.getString("first_name");
-                registros[2] = empleados.getString("last_name");
-                registros[3] = empleados.getString("age");
-                registros[4] = empleados.getString("cargo");
-                registros[5] = empleados.getString("address");
+            while (customer.next()) {
+                registros[0] = customer.getString("cedula");
+                registros[1] = customer.getString("first_name");
+                registros[2] = customer.getString("last_name");
+                registros[3] = customer.getString("age");
+                registros[4] = customer.getString("credito");
+                registros[5] = customer.getString("address");
                 tableData.addRow(registros);
             }
-            jt_empleados.setModel(tableData);
+            jt_customer.setModel(tableData);
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -72,26 +65,24 @@ public class admin_empleados extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         txt_name = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jt_empleados = new javax.swing.JTable();
+        jt_customer = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txt_nombre = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txt_pass = new javax.swing.JPasswordField();
-        jLabel7 = new javax.swing.JLabel();
-        txt_code = new javax.swing.JTextField();
+        cedula = new javax.swing.JLabel();
+        txt_cedula = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txt_lastName = new javax.swing.JTextField();
         txt_age = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txt_addres = new javax.swing.JTextField();
-        cb_cargo = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
         btn_buscar = new javax.swing.JButton();
         btn_agregar = new javax.swing.JButton();
         btn_actualizar = new javax.swing.JButton();
         btn_eliminar = new javax.swing.JButton();
+        txt_credito = new javax.swing.JTextField();
 
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("jRadioButtonMenuItem1");
@@ -105,46 +96,32 @@ public class admin_empleados extends javax.swing.JInternalFrame {
 
         txt_name.setBackground(new java.awt.Color(153, 153, 153));
 
-        jt_empleados.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jt_empleados.setModel(new javax.swing.table.DefaultTableModel(
+        jt_customer.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jt_customer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Code", "Nombre", "Apellido", "Puesto", "Edad", "Dirección"
+                "Code", "Nombre", "Apellido", "Age", "crédito", "Dirección"
             }
         ));
-        jt_empleados.setRowHeight(20);
-        jt_empleados.addMouseListener(new java.awt.event.MouseAdapter() {
+        jt_customer.setRowHeight(20);
+        jt_customer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jt_empleadosMouseClicked(evt);
+                jt_customerMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jt_empleados);
+        jScrollPane1.setViewportView(jt_customer);
 
         jLabel1.setText("NOMBRE");
 
-        jLabel4.setText("CONTRASEÑA");
-
-        txt_pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passActionPerformed(evt);
-            }
-        });
-
-        jLabel7.setText("CODE");
+        cedula.setText("CEDULA");
 
         jLabel3.setText("     EDAD");
 
         jLabel5.setText("DIRECCIÓN");
 
-        jLabel6.setText("PUESTO");
-
-        cb_cargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cb_cargoActionPerformed(evt);
-            }
-        });
+        jLabel6.setText("CREDITO");
 
         jLabel8.setText("APELLIDO");
 
@@ -180,6 +157,12 @@ public class admin_empleados extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_credito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_creditoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -188,20 +171,13 @@ public class admin_empleados extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -219,9 +195,9 @@ public class admin_empleados extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(28, 28, 28)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_addres, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_addres, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                            .addComponent(txt_credito)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -243,24 +219,23 @@ public class admin_empleados extends javax.swing.JInternalFrame {
                             .addComponent(txt_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_pass)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_credito, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_age)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txt_addres, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(cb_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txt_cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_lastName, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_addres, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_actualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,7 +257,7 @@ public class admin_empleados extends javax.swing.JInternalFrame {
             .addGroup(txt_nameLayout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -330,86 +305,82 @@ public class admin_empleados extends javax.swing.JInternalFrame {
         String first_name = txt_nombre.getText();
         String last_name = txt_lastName.getText();
         String Address = txt_addres.getText();
-        String code_empleado = txt_code.getText();
-        String user_password = String.valueOf(txt_pass.getPassword());
         int age = Integer.parseInt(txt_age.getText());
-        String cargo = (String) cb_cargo.getSelectedItem();
-        this.empleado.insertEmpleado(cn, last_name, first_name, age, Address, code_empleado, user_password, cargo);
+        String credito = txt_credito.getText();
+        this.customer.insertCustomer(last_name, first_name, age, Address, credito, credito);
         fillTable();
         clear_input();
     }//GEN-LAST:event_btn_agregarActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
         int row;
-        row = jt_empleados.getSelectedRow();
-        String code = jt_empleados.getValueAt(row, 0).toString();
-        this.empleado.delete_empleado(code);
+        row = jt_customer.getSelectedRow();
+        String cedula = jt_customer.getValueAt(row, 0).toString();
+        this.customer.deleteCustomer(cedula);
         fillTable();
+        clear_input();
         JOptionPane.showMessageDialog(null, "EMPLEADO ELIMINADO CON EXITO");
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
-    private void txt_passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passActionPerformed
-
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        String code = txt_code.getText();
-        ResultSet emp = this.empleado.getEmpleado(code);
-        DefaultTableModel tableData = (DefaultTableModel) jt_empleados.getModel();
-        
-        if (code.equals("")){
+        String cedula = txt_cedula.getText();
+        ResultSet emp = this.customer.getCustomer(cedula);
+        DefaultTableModel tableData = (DefaultTableModel) jt_customer.getModel();
+
+        if (cedula.equals("")) {
             JOptionPane.showMessageDialog(null, "ERROR: EL CAMPO CODE ESTA VACIO");
-            txt_code.requestFocus();
+            txt_cedula.requestFocus();
             return;
         }
-        //Limpiar la tabla antes de introducir los datos
+//        Limpiar la tabla antes de introducir los datos
         tableData.setRowCount(0);
         String[] registros = new String[6];
         try {
             while (emp.next()) {
-                registros[0] = emp.getString("code_empleado");
+                registros[0] = emp.getString("cedula");
                 registros[1] = emp.getString("first_name");
                 registros[2] = emp.getString("last_name");
                 registros[3] = emp.getString("age");
-                registros[4] = emp.getString("cargo");
+                registros[4] = emp.getString("credito");
                 registros[5] = emp.getString("address");
                 tableData.addRow(registros);
             }
-            jt_empleados.setModel(tableData);
+            jt_customer.setModel(tableData);
         } catch (SQLException e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void cb_cargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_cargoActionPerformed
-
-    }//GEN-LAST:event_cb_cargoActionPerformed
-
     private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
         String first_name = txt_nombre.getText();
         String last_name = txt_lastName.getText();
         String Address = txt_addres.getText();
-        String code = txt_code.getText();
+        String cedula = txt_cedula.getText();
         int age = Integer.parseInt(txt_age.getText());
-        String cargo = (String) cb_cargo.getSelectedItem();
-        this.empleado.update_empleado(code, last_name,  first_name,
-            age, Address, cargo);
+        String address = txt_addres.getText();
+        String credito = txt_credito.getText();
+        this.customer.updateCustomer(cedula, last_name, first_name,
+                age, Address, credito);
         fillTable();
         clear_input();
     }//GEN-LAST:event_btn_actualizarActionPerformed
 
-    private void jt_empleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_empleadosMouseClicked
+    private void jt_customerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_customerMouseClicked
         int row;
-        row = jt_empleados.getSelectedRow();
-        txt_code.setText(jt_empleados.getValueAt(row, 0).toString());
-        txt_nombre.setText(jt_empleados.getValueAt(row,1 ).toString());
-        txt_lastName.setText(jt_empleados.getValueAt(row, 2).toString());
-        txt_age.setText(jt_empleados.getValueAt(row, 3).toString());
-        cb_cargo.setSelectedItem(jt_empleados.getValueAt(row, 4).toString());
-        txt_addres.setText(jt_empleados.getValueAt(row, 5).toString());
-        txt_code.setEnabled(false);
-    }//GEN-LAST:event_jt_empleadosMouseClicked
+        row = jt_customer.getSelectedRow();
+        txt_cedula.setText(jt_customer.getValueAt(row, 0).toString());
+        txt_nombre.setText(jt_customer.getValueAt(row, 1).toString());
+        txt_lastName.setText(jt_customer.getValueAt(row, 2).toString());
+        txt_age.setText(jt_customer.getValueAt(row, 3).toString());
+        txt_credito.setText(jt_customer.getValueAt(row, 4).toString());
+        txt_addres.setText(jt_customer.getValueAt(row, 5).toString());
+        txt_cedula.setEnabled(false);
+    }//GEN-LAST:event_jt_customerMouseClicked
+
+    private void txt_creditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_creditoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_creditoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -417,27 +388,25 @@ public class admin_empleados extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_agregar;
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_eliminar;
-    private javax.swing.JComboBox<String> cb_cargo;
+    private javax.swing.JLabel cedula;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jt_empleados;
+    private javax.swing.JTable jt_customer;
     private javax.swing.JTextField txt_addres;
     private javax.swing.JTextField txt_age;
-    private javax.swing.JTextField txt_code;
+    private javax.swing.JTextField txt_cedula;
+    private javax.swing.JTextField txt_credito;
     private javax.swing.JTextField txt_lastName;
     private javax.swing.JPanel txt_name;
     private javax.swing.JTextField txt_nombre;
-    private javax.swing.JPasswordField txt_pass;
     // End of variables declaration//GEN-END:variables
 
     connect cc = new connect();

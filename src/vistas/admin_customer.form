@@ -110,7 +110,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="494" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="492" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -124,7 +124,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jt_empleados">
+                    <Component class="javax.swing.JTable" name="jt_customer">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Times New Roman" size="14" style="0"/>
@@ -134,8 +134,8 @@
                             <Column editable="true" title="Code" type="java.lang.Object"/>
                             <Column editable="true" title="Nombre" type="java.lang.Object"/>
                             <Column editable="true" title="Apellido" type="java.lang.Object"/>
-                            <Column editable="true" title="Puesto" type="java.lang.Object"/>
-                            <Column editable="true" title="Edad" type="java.lang.Object"/>
+                            <Column editable="true" title="Age" type="java.lang.Object"/>
+                            <Column editable="true" title="cr&#xe9;dito" type="java.lang.Object"/>
                             <Column editable="true" title="Direcci&#xf3;n" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -179,7 +179,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jt_empleadosMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jt_customerMouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -193,25 +193,14 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel7" min="-2" pref="77" max="-2" attributes="0"/>
+                                      <Component id="cedula" min="-2" pref="77" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="txt_code" min="-2" pref="225" max="-2" attributes="0"/>
+                                      <Component id="txt_cedula" min="-2" pref="225" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="jLabel1" max="32767" attributes="0"/>
-                                          <Component id="jLabel4" pref="85" max="32767" attributes="0"/>
-                                      </Group>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="txt_pass" min="-2" pref="225" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="txt_nombre" min="-2" pref="228" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
+                                      <Component id="jLabel1" min="-2" pref="85" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      <Component id="txt_nombre" min="-2" pref="228" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
@@ -235,9 +224,9 @@
                                           <Component id="jLabel6" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cb_cargo" min="-2" pref="228" max="-2" attributes="0"/>
-                                          <Component id="txt_addres" min="-2" pref="228" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txt_addres" pref="228" max="32767" attributes="0"/>
+                                          <Component id="txt_credito" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -266,30 +255,31 @@
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jLabel6" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                                          <Component id="txt_pass" max="32767" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                              <Component id="jLabel6" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                              <Component id="txt_credito" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                          </Group>
                                           <Component id="txt_age" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="jLabel3" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                              <Component id="jLabel3" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                                  <Component id="txt_cedula" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                                                  <Component id="cedula" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                                              </Group>
+                                          </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                                              <Component id="txt_lastName" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="txt_addres" alignment="1" max="32767" attributes="0"/>
-                                          <Component id="jLabel5" alignment="1" max="32767" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="103" alignment="1" groupAlignment="3" attributes="0">
+                                          <Component id="txt_lastName" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
+                                          <Component id="jLabel8" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="cb_cargo" min="-2" pref="37" max="-2" attributes="0"/>
+                                      <Component id="txt_addres" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="jLabel5" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="78" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="txt_code" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
-                                  <Component id="jLabel7" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                                   <Component id="btn_buscar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                                   <Component id="btn_agregar" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                                   <Component id="btn_actualizar" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
@@ -308,22 +298,12 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_nombre">
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel4">
+                    <Component class="javax.swing.JLabel" name="cedula">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="CONTRASE&#xd1;A"/>
+                        <Property name="text" type="java.lang.String" value="CEDULA"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JPasswordField" name="txt_pass">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_passActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel7">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="CODE"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txt_code">
+                    <Component class="javax.swing.JTextField" name="txt_cedula">
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
                       <Properties>
@@ -341,23 +321,10 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="PUESTO"/>
+                        <Property name="text" type="java.lang.String" value="CREDITO"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_addres">
-                    </Component>
-                    <Component class="javax.swing.JComboBox" name="cb_cargo">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="0"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cb_cargoActionPerformed"/>
-                      </Events>
-                      <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
                       <Properties>
@@ -406,6 +373,11 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_eliminarActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="txt_credito">
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_creditoActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
