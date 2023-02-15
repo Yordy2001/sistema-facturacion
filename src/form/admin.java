@@ -2,6 +2,7 @@ package form;
 
 import javax.swing.JInternalFrame;
 import vistas.admin_articulos;
+import vistas.admin_customer;
 import vistas.admin_empleados;
 
 public class admin extends javax.swing.JFrame {
@@ -237,7 +238,13 @@ public class admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        admin_customer interCustomer = new admin_customer();
+        if(internatView != null){
+            internatView.setVisible(false);
+        }
+        internatView = interCustomer;
+        jP_interform.add(internatView);
+        internatView.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
