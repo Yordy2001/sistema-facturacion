@@ -9,15 +9,20 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class connect {
+
     Connection connect = null;
-    
+
     public Connection conexion() {
-        try {
-            connect = DriverManager.getConnection("jdbc:mysql://localhost:23306/sistema-facturacion", "user", "root");
-            System.out.println("Database Connected");
-        } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al connectarse a la base de datos");
-            System.out.println(e);
+
+        if (connect == null) {
+            try {
+                connect = DriverManager.getConnection("jdbc:mysql://localhost:23306/sistema-facturacion", "user", "root");
+                System.out.println("Database Connected");
+            } catch (HeadlessException | SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al connectarse a la base de datos");
+                System.out.println(e);
+            }
+            return connect;
         }
         return connect;
     }
@@ -26,8 +31,10 @@ public class connect {
         Connection cn = conexion();
         empleadoM empleado = new empleadoM(cn);
         Articulo articulo = new Articulo(cn);
+        Customer customer = new Customer(cn);
         articulo.articuloTable();
-        empleado.empleado_table(cn);
+        empleado.empleado_table();
+        customer.customer_table();
     }
 
     PreparedStatement prepareStatement(String query) {
