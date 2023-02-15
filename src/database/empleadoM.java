@@ -16,7 +16,7 @@ public class empleadoM {
         cursor = cn;
     }
 
-    public void empleado_table() {
+    public void empleado_table(Connection cn) {
 
         try {
             String query = "CREATE TABLE if not exists empleados(\n"
@@ -30,7 +30,7 @@ public class empleadoM {
                     + "    password varchar(255),\n"
                     + "    PRIMARY KEY (ID)"
                     + ");";
-            PreparedStatement quer = cursor.prepareStatement(query);
+            PreparedStatement quer = cn.prepareStatement(query);
 
             int n = quer.executeUpdate();
         } catch (SQLException ex) {
