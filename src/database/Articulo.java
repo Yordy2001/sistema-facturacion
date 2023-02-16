@@ -95,7 +95,6 @@ public class Articulo {
             JOptionPane.showMessageDialog(null, "Error de base de datos");
         }
     }
-//
 
     public boolean deleteArticulo(String ArticleCode) {
         try {
