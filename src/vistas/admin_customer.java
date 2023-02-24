@@ -2,13 +2,12 @@ package vistas;
 
 import database.Customer;
 import database.connect;
-import database.empleadoM;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

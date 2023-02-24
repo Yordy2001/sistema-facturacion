@@ -63,7 +63,6 @@ public class admin_articulos extends javax.swing.JInternalFrame {
         String[] registros = new String[7];
         try {
             while (articulos.next()) {
-//                System.out.println(articulos.getString("precio_venta"));
                 registros[0] = articulos.getString("code");
                 registros[1] = articulos.getString("name");
                 registros[2] = articulos.getString("precio_compra");
@@ -71,7 +70,7 @@ public class admin_articulos extends javax.swing.JInternalFrame {
                 registros[4] = articulos.getString("cantidad");
                 registros[5] = articulos.getString("itbis");
                 registros[6] = articulos.getString("description");
-//                
+                
                 tableData.addRow(registros);
             }
             jt_articulos.setModel(tableData);
@@ -424,14 +423,15 @@ public class admin_articulos extends javax.swing.JInternalFrame {
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         String code = txt_articuloCode.getText();
-        ResultSet emp = this.articulo.getArticulo(code);
-        DefaultTableModel tableData = (DefaultTableModel) jt_articulos.getModel();
 
         if (code.equals("")) {
             JOptionPane.showMessageDialog(null, "ERROR: EL CAMPO CODE ESTA VACIO");
             txt_articuloCode.requestFocus();
             return;
         }
+        ResultSet emp = this.articulo.getArticulo(code);
+        DefaultTableModel tableData = (DefaultTableModel) jt_articulos.getModel();
+
         //Limpiar la tabla antes de introducir los datos
         tableData.setRowCount(0);
         String[] registros = new String[6];
