@@ -13,9 +13,9 @@ import javax.swing.table.DefaultTableModel;
 import java.lang.Double;
 
 public class adminFacturacion extends javax.swing.JInternalFrame {
-    
+
     Articulo articulo;
-    
+
     public adminFacturacion() {
         connect cc = new connect();
         Connection cn = cc.conexion();
@@ -23,53 +23,56 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         initComponents();
         fillCbType();
     }
-    
+
     private void fillCbType() {
         String[] type = {"contado", "crédito"};
         for (String i : type) {
             cb_type.addItem(i);
         }
     }
-    
+
     private void calcularTotal() {
         DecimalFormat format = new DecimalFormat("#,###.##");
         DefaultTableModel tableData = (DefaultTableModel) jt_factura.getModel();
         double total1 = 0.0;
         double total_itbis = 0.0;
         double sub_total = 0.0;
+        double total_descuento = 0.0;
         for (int i = 0; i < jt_factura.getRowCount(); i++) {
-            String total2 =  jt_factura.getValueAt(i, 6).toString();
+            String total2 = jt_factura.getValueAt(i, 6).toString();
             String itbis2 = jt_factura.getValueAt(i, 5).toString();
             String subtotal2 = jt_factura.getValueAt(i, 3).toString();
+            String descuento2 = jt_factura.getValueAt(i, 4).toString();
             total_itbis = total_itbis + Double.parseDouble(itbis2);
             total1 = total1 + Double.parseDouble(total2);
             sub_total = sub_total + Double.parseDouble(subtotal2);
- 
+            total_descuento = total_descuento + Double.parseDouble(descuento2);
+
         }
         total.setText(String.format("%.2f", total1));
         itbis.setText(String.format("%.2f", total_itbis));
-        subtotal.setText(String.format("%.2f", sub_total ));
-//        totalDsc.setText(String.format("%.2f", descuento));
+        subtotal.setText(String.format("%.2f", sub_total));
+        descuento.setText(String.format("%.2f", total_descuento));
     }
-    
+
     private void fillTable(String code) {
-        DecimalFormat format = new DecimalFormat("#,###.##");
         double cantidad = Double.parseDouble(txt_cantidad.getText());
         ResultSet res = this.articulo.getArticulo(code);
         DefaultTableModel tableData = (DefaultTableModel) jt_factura.getModel();
-        
+
         try {
-            //Limpiar la tabla antes de introducir los datos
             String[] registros = new String[8];
             while (res.next()) {
-                double itbis = Double.parseDouble(res.getString("itbis")) / 100;
+                double itbi = Double.parseDouble(res.getString("itbis")) / 100;
                 double precio = Double.parseDouble(res.getString("precio_venta"));
-                double totalItbis = (cantidad * precio) * itbis;
+                double totalItbis = (cantidad * precio) * itbi;
+                double desc = Double.parseDouble(
+                        txt_descuento.getText())/100*precio;
                 registros[0] = res.getString("code");
                 registros[1] = res.getString("description");
                 registros[2] = txt_cantidad.getText();
                 registros[3] = res.getString("precio_venta");
-                registros[4] = txt_descuento.getText();
+                registros[4] = String.valueOf(desc);
                 registros[5] = String.valueOf(totalItbis);
                 registros[6] = String.valueOf((cantidad * precio) + totalItbis);
                 tableData.addRow(registros);
@@ -81,7 +84,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
             Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void clear_input() {
         txt_code.setText("");
         txt_cantidad.setText("");
@@ -89,11 +92,17 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         artticulo_desc.setText("");
         txt_code.requestFocus();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuBar1 = new java.awt.MenuBar();
+        menu1 = new java.awt.Menu();
+        menu2 = new java.awt.Menu();
+        menuBar2 = new java.awt.MenuBar();
+        menu3 = new java.awt.Menu();
+        menu4 = new java.awt.Menu();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         txt_code = new javax.swing.JTextField();
@@ -120,6 +129,21 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         itbis = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jt_factura = new javax.swing.JTable();
+        choice1 = new java.awt.Choice();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        sold_fact = new javax.swing.JMenu();
+
+        menu1.setLabel("File");
+        menuBar1.add(menu1);
+
+        menu2.setLabel("Edit");
+        menuBar1.add(menu2);
+
+        menu3.setLabel("File");
+        menuBar2.add(menu3);
+
+        menu4.setLabel("Edit");
+        menuBar2.add(menu4);
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -239,7 +263,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("sub-total");
+        jLabel3.setText("SUB-TOTAL");
 
         subtotal.setEditable(false);
         subtotal.addActionListener(new java.awt.event.ActionListener() {
@@ -264,7 +288,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         jButton2.setBackground(new java.awt.Color(255, 153, 0));
         jButton2.setText("FACTURAR");
 
-        jLabel9.setText("Itbis");
+        jLabel9.setText("ITBIS");
 
         itbis.setEditable(false);
         itbis.addActionListener(new java.awt.event.ActionListener() {
@@ -284,20 +308,18 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(descuento, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                            .addComponent(total, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(itbis)
-                            .addComponent(subtotal))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(descuento, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(itbis, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(total, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,16 +382,30 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1300, 820));
+        getContentPane().add(choice1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, -20, -1, -1));
+
+        sold_fact.setText("COBRAR");
+        jMenuBar1.add(sold_fact);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 
     private void txt_codeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codeActionPerformed
+        String code = txt_code.getText();
         if (txt_code.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "CAMPO CODIGO EN BLANCO");
         }
-        
+        ResultSet res = this.articulo.getArticulo(code);
+        try {
+            if (res.next()) {  
+               artticulo_desc.setText(res.getString("name"));  
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         txt_cantidad.requestFocus();
     }//GEN-LAST:event_txt_codeActionPerformed
 
@@ -393,7 +429,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String code = txt_code.getText();
-        
+
         if (txt_code.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "CAMPO CODIGO EN BLANCO");
         }
@@ -421,6 +457,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField artticulo_desc;
     private javax.swing.JComboBox<String> cb_type;
+    private java.awt.Choice choice1;
     private javax.swing.JTextField descuento;
     private javax.swing.JTextField itbis;
     private javax.swing.JButton jButton1;
@@ -435,11 +472,19 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jt_factura;
+    private java.awt.Menu menu1;
+    private java.awt.Menu menu2;
+    private java.awt.Menu menu3;
+    private java.awt.Menu menu4;
+    private java.awt.MenuBar menuBar1;
+    private java.awt.MenuBar menuBar2;
+    private javax.swing.JMenu sold_fact;
     private javax.swing.JTextField subtotal;
     private javax.swing.JTextField total;
     private javax.swing.JTextField txt_cantidad;
