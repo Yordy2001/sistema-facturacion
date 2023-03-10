@@ -1,5 +1,6 @@
 package vistas;
 
+import vistas.adminCobro;
 import database.Articulo;
 import database.connect;
 import java.sql.Connection;
@@ -145,7 +146,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         menu4.setLabel("Edit");
         menuBar2.add(menu4);
 
-        setBorder(null);
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -287,6 +288,11 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 153, 0));
         jButton2.setText("FACTURAR");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("ITBIS");
 
@@ -452,6 +458,11 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
     private void itbisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itbisActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_itbisActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        adminCobro cobro = new adminCobro();
+        cobro.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
