@@ -2,6 +2,7 @@ package vistas;
 
 import vistas.adminCobro;
 import database.Articulo;
+import database.Factura;
 import database.connect;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,11 +17,14 @@ import java.lang.Double;
 public class adminFacturacion extends javax.swing.JInternalFrame {
 
     Articulo articulo;
+    Factura factura;
 
     public adminFacturacion() {
         connect cc = new connect();
         Connection cn = cc.conexion();
         this.articulo = new Articulo(cn);
+        this.factura = new Factura(cn);
+       
         initComponents();
         fillCbType();
     }

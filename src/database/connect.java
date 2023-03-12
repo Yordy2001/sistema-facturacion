@@ -26,8 +26,11 @@ public class connect {
         Connection cn = conexion();
         empleadoM empleado = new empleadoM(cn);
         Articulo articulo = new Articulo(cn);
+        Factura factura = new Factura(cn);
         articulo.articuloTable();
         empleado.empleado_table(cn);
+        factura.tableFactura();
+        
     }
 
     PreparedStatement prepareStatement(String query) {
