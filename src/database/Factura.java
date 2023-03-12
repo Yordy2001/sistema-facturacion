@@ -93,4 +93,21 @@ public class Factura {
             JOptionPane.showMessageDialog(null, "Error de base de datos");
         }
     }
+
+    private Integer getIdStore(String name) {
+        int idStore =0;
+        try {
+            String query = "SELECT id FROM store_info WHERE name='" + name + "'  "
+                    + " VALUES (1, 2, 1, 2, 1);";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet res = sqlquery.executeQuery(query);
+            
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
+        }
+        return idStore;
+    }
+
 }
