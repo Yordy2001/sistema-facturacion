@@ -81,12 +81,13 @@ public class Factura {
     public void insertBill(String id_store, String id_customer, String id_empleado, String paid_method, String type) {
 
         String idStore = getIdStore(id_store);
-
+        String idCustomer = getIdCustomer(id_customer);
+        String idEmpleado = getIdEmpleado(id_empleado);
         try {
 
             String query = "INSERT INTO bill(id_store, id_customer, id_empleado, paid_method, `type`)"
                     + " VALUES ('" + idStore
-                    + "', 2, 1, 2, 1);";
+                    + "', '" + idCustomer + "', '" + idEmpleado + "', 2, 1);";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate();
@@ -113,8 +114,8 @@ public class Factura {
         }
         return idStore;
     }
-    
-      private String getIdCustomer(String cedula) {
+
+    private String getIdCustomer(String cedula) {
         String idCustomer = "";
         try {
             String query = "SELECT id FROM customer WHERE cedula='" + cedula + "';";
@@ -129,5 +130,39 @@ public class Factura {
             JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
         }
         return idCustomer;
+    }
+
+    private String getIdEmpleado(String code_empleado) {
+        String idEmpleado = "";
+        try {
+            String query = "SELECT id FROM empleados WHERE cedula='" + code_empleado + "';";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet res = sqlquery.executeQuery(query);
+            if (res.next()) {
+                idEmpleado = res.getString("id");
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
+        }
+        return idEmpleado;
+    }
+    
+    private String getPaidMethod(String paid_method){
+        String idPaidMethod = "";
+        try {
+            String query = "SELECT id FROM empleados WHERE method='" + paid_method + "';";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet res = sqlquery.executeQuery(query);
+            if (res.next()) {
+                idPaidMethod = res.getString("id");
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
+        }
+        return idPaidMethod;
     }
 }
