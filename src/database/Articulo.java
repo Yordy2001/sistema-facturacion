@@ -60,12 +60,12 @@ public class Articulo {
         ResultSet res = null;
         try {
             String query = "SELECT name, description, code, cantidad, precio_venta,"
-                    + " precio_compra, itbis, articulos_category.category FROM articulos"
+                    + " precio_compra, art_itbis.itbis as itbis, articulo_category.category as category FROM articulos"
+                    + " JOIN art_itbis ON articulos.itbis = art_itbis.id"
                     + " JOIN articulo_category ON articulos.id_category = articulo_category.id"
-                    + " WHERE articulos.id= '" + id + "'";
+                    + " WHERE articulos.code= '" + id + "'";
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             res = sqlquery.executeQuery(query);
-
             return res;
         } catch (SQLException e) {
             System.out.println(e);
@@ -95,7 +95,6 @@ public class Articulo {
             JOptionPane.showMessageDialog(null, "Error de base de datos");
         }
     }
-//
 
     public boolean deleteArticulo(String ArticleCode) {
         try {
