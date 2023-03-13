@@ -78,16 +78,21 @@ public class Factura {
         return res;
     }
 
-    public void insertBill(String id_store, String id_customer, String id_empleado, String paid_method, String type) {
+    public void insertBill(String id_store, String id_customer,
+            String id_empleado, String paid_method, String type) {
 
         String idStore = getIdStore(id_store);
         String idCustomer = getIdCustomer(id_customer);
         String idEmpleado = getIdEmpleado(id_empleado);
+        String idPaidMEthod = getPaidMethod(paid_method);
+        String idType = getIdBillType(type);
         try {
 
-            String query = "INSERT INTO bill(id_store, id_customer, id_empleado, paid_method, `type`)"
+            String query = "INSERT INTO bill(id_store, id_customer,"
+                    + " id_empleado, paid_method, `type`)"
                     + " VALUES ('" + idStore
-                    + "', '" + idCustomer + "', '" + idEmpleado + "', 2, 1);";
+                    + "', '" + idCustomer + "',"
+                    + " '" + idEmpleado + "', '" + idPaidMEthod + "', '" + idType + "');";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate();
@@ -148,11 +153,11 @@ public class Factura {
         }
         return idEmpleado;
     }
-    
-    private String getPaidMethod(String paid_method){
+
+    private String getPaidMethod(String paid_method) {
         String idPaidMethod = "";
         try {
-            String query = "SELECT id FROM empleados WHERE method='" + paid_method + "';";
+            String query = "SELECT id FROM paid_method WHERE method='" + paid_method + "';";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             ResultSet res = sqlquery.executeQuery(query);
@@ -164,5 +169,22 @@ public class Factura {
             JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
         }
         return idPaidMethod;
+    }
+
+    private String getIdBillType(String type) {
+        String idtype = "";
+        try {
+            String query = "SELECT id FROM bill_type WHERE type='" + type + "';";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet res = sqlquery.executeQuery(query);
+            if (res.next()) {
+                idtype = res.getString("id");
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
+        }
+        return idtype;
     }
 }
