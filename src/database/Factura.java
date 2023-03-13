@@ -80,10 +80,13 @@ public class Factura {
 
     public void insertBill(String id_store, String id_customer, String id_empleado, String paid_method, String type) {
 
+        String idStore = getIdStore(id_store);
+
         try {
 
             String query = "INSERT INTO bill(id_store, id_customer, id_empleado, paid_method, `type`)"
-                    + " VALUES (1, 2, 1, 2, 1);";
+                    + " VALUES ('" + idStore
+                    + "', 2, 1, 2, 1);";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             int n = sqlquery.executeUpdate();
@@ -94,20 +97,37 @@ public class Factura {
         }
     }
 
-    private Integer getIdStore(String name) {
-        int idStore =0;
+    private String getIdStore(String name) {
+        String idStore = "";
         try {
-            String query = "SELECT id FROM store_info WHERE name='" + name + "'  "
-                    + " VALUES (1, 2, 1, 2, 1);";
+            String query = "SELECT id FROM store_info WHERE name='" + name + "';";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             ResultSet res = sqlquery.executeQuery(query);
-            
+            if (res.next()) {
+                idStore = res.getString("id");
+            }
         } catch (SQLException e) {
             System.out.print(e);
             JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
         }
         return idStore;
     }
+    
+      private String getIdCustomer(String cedula) {
+        String idCustomer = "";
+        try {
+            String query = "SELECT id FROM customer WHERE cedula='" + cedula + "';";
 
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            ResultSet res = sqlquery.executeQuery(query);
+            if (res.next()) {
+                idCustomer = res.getString("id");
+            }
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Cominicarse con un tecnico");
+        }
+        return idCustomer;
+    }
 }
