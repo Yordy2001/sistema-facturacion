@@ -54,11 +54,11 @@ public class empleadoM {
         }
     }
 
-    public boolean login_db(Connection cn, String codeEmpleado, String userPassword) {
+    public boolean login_db(String codeEmpleado, String userPassword) {
         try {
             String query = "SELECT code_empleado, password from empleados"
                     + " where code_empleado='" + codeEmpleado + "'and password='" + userPassword + "'";
-            PreparedStatement sqlquery = cn.prepareStatement(query);
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
             ResultSet n = sqlquery.executeQuery(query);
             if (!n.next()) {
                 JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");

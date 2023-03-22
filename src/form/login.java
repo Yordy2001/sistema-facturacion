@@ -3,6 +3,10 @@ package form;
 import database.connect;
 import database.empleadoM;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class login extends javax.swing.JFrame {
@@ -236,9 +240,20 @@ public class login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "el codigo del empleado esta en blanco");
             txt_password.requestFocus(true);
         }
-        if(empleado.login_db(cn, code, password)){
-            this.dispose();
-            new admin().setVisible(true);
+        if (empleado.login_db(code, password)) {
+            try {
+                this.dispose();
+                ResultSet res = empleado.getEmpleado(code);
+                if (res.next()) {
+                    if ("cajero".equals(res.getString("cargo"))) {
+                        new Facturar().setVisible(true);
+                        return;
+                    }
+                    new admin().setVisible(true);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 
