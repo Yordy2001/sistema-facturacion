@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.lang.Double;
+//import java.lang.Double;
 
 public class adminFacturacion extends javax.swing.JInternalFrame {
 
@@ -24,7 +24,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         Connection cn = cc.conexion();
         this.articulo = new Articulo(cn);
         this.factura = new Factura(cn);
-       
+
         initComponents();
         fillCbType();
     }

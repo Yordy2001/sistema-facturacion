@@ -230,6 +230,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_codeActionPerformed
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        Facturar factura = new Facturar();
         String code = txt_code.getText();
         String password = String.valueOf(txt_password.getPassword());
         if (code.equals("")) {
@@ -247,6 +248,7 @@ public class login extends javax.swing.JFrame {
                 if (res.next()) {
                     if ("cajero".equals(res.getString("cargo"))) {
                         new Facturar().setVisible(true);
+//                        factura.txt_vendedor.setText(res.getString("first_name"));
                         return;
                     }
                     new admin().setVisible(true);
