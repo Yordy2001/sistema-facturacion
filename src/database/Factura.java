@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -84,7 +85,7 @@ public class Factura {
         String idStore = getIdStore(id_store);
         String idCustomer = getIdCustomer(id_customer);
         String idEmpleado = getIdEmpleado(id_empleado);
-        String idPaidMEthod = getPaidMethod(paid_method);
+        String idPaidMethod = getPaidMethod(paid_method);
         String idType = getIdBillType(type);
         try {
 
@@ -92,10 +93,14 @@ public class Factura {
                     + " id_empleado, paid_method, `type`)"
                     + " VALUES ('" + idStore
                     + "', '" + idCustomer + "',"
-                    + " '" + idEmpleado + "', '" + idPaidMEthod + "', '" + idType + "');";
+                    + " '" + idEmpleado + "', '" + idPaidMethod + "', '" + idType + "');";
 
-            PreparedStatement sqlquery = cursor.prepareStatement(query);
-            int n = sqlquery.executeUpdate();
+            PreparedStatement sqlquery = cursor.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            sqlquery.executeUpdate();
+            ResultSet rs = sqlquery.getGeneratedKeys();
+            rs.next();
+            //Get id from factura that generate before 
+            long pk = rs.getLong(1);
             JOptionPane.showMessageDialog(null, "Articulo agregado!");
         } catch (SQLException e) {
             System.out.print(e);
@@ -140,7 +145,7 @@ public class Factura {
     private String getIdEmpleado(String code_empleado) {
         String idEmpleado = "";
         try {
-            String query = "SELECT id FROM empleados WHERE cedula='" + code_empleado + "';";
+            String query = "SELECT id FROM empleados WHERE code_empleado='" + code_empleado + "';";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             ResultSet res = sqlquery.executeQuery(query);

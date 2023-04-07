@@ -658,12 +658,15 @@ public class Facturar extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDireccionActionPerformed
 
     private void jbBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarClienteActionPerformed
+        
         String cedula = txtCedula.getText();
         ResultSet res = this.customer.getCustomer(cedula);
+        System.out.print(res);
         try {
             while (res.next()) {
-                txtNombre.setText(res.getString("name"));
+                txtNombre.setText(res.getString("first_name"));
                 txtDireccion.setText(res.getString("address"));
+                System.out.print("first_name");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);

@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/form/admin.java</file>
             <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/form/Facturar.java</file>
+            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/database/Articulo.java</file>
+            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/database/Customer.java</file>
             <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/vistas/adminFacturacion.java</file>
-            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/vistas/admin_empleados.java</file>
             <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/vistas/admin_articulos.java</file>
-            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/vistas/adminCobro.java</file>
-            <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/vistas/admin_customer.java</file>
             <file>file:/C:/Users/Yordy/OneDrive/Documentos/university/sistema-facturacion/src/form/login.java</file>
         </group>
     </open-files>

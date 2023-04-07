@@ -72,7 +72,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
                 double precio = Double.parseDouble(res.getString("precio_venta"));
                 double totalItbis = (cantidad * precio) * itbi;
                 double desc = Double.parseDouble(
-                        txt_descuento.getText())/100*precio;
+                        txt_descuento.getText()) / 100 * precio;
                 registros[0] = res.getString("code");
                 registros[1] = res.getString("description");
                 registros[2] = txt_cantidad.getText();
@@ -410,8 +410,8 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         }
         ResultSet res = this.articulo.getArticulo(code);
         try {
-            if (res.next()) {  
-               artticulo_desc.setText(res.getString("name"));  
+            if (res.next()) {
+                artticulo_desc.setText(res.getString("name"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
@@ -464,8 +464,13 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_itbisActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        adminCobro cobro = new adminCobro();
-        cobro.setVisible(true);
+        String store = "pc-master";
+        String cedula = "40514566933";
+        String empleado = "0101";
+        String method = "efectivo";
+        String type = "contado";
+        this.factura.insertBill(store, cedula,
+                empleado, method, type);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
