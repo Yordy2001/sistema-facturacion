@@ -59,7 +59,7 @@ public class Articulo {
     public ResultSet getArticulo(String id) {
         ResultSet res = null;
         try {
-            String query = "SELECT name, description, code, cantidad, precio_venta,"
+            String query = "SELECT articulos.id, name, description, code, cantidad, precio_venta, "
                     + " precio_compra, art_itbis.itbis as itbis, articulo_category.category as category FROM articulos"
                     + " JOIN art_itbis ON articulos.itbis = art_itbis.id"
                     + " JOIN articulo_category ON articulos.id_category = articulo_category.id"
@@ -134,6 +134,20 @@ public class Articulo {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
         }
+    }
+
+    public ResultSet getProducId(String code) {
+        ResultSet rs = null;
+        try {
+            String query = "SELECT id FROM articulos  where code='" + code + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            rs = sqlquery.executeQuery(query);
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+        return rs;
     }
 
     private String getItbis(String itbi) {

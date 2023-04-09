@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 public class Factura {
 
     Connection cursor;
+    Articulo articulo;
 
     public Factura(Connection cn) {
         cursor = cn;
@@ -79,9 +80,10 @@ public class Factura {
         return res;
     }
 
-    public void insertBill(String id_store, String id_customer,
+    public long insertBill(String id_store, String id_customer,
             String id_empleado, String paid_method, String type) {
 
+        long bill_id = 0;
         String idStore = getIdStore(id_store);
         String idCustomer = getIdCustomer(id_customer);
         String idEmpleado = getIdEmpleado(id_empleado);
@@ -100,7 +102,27 @@ public class Factura {
             ResultSet rs = sqlquery.getGeneratedKeys();
             rs.next();
             //Get id from factura that generate before 
-            long pk = rs.getLong(1);
+            bill_id = rs.getLong(1);
+            JOptionPane.showMessageDialog(null, "Articulo agregado!");
+            return bill_id;
+
+        } catch (SQLException e) {
+            System.out.print(e);
+            JOptionPane.showMessageDialog(null, "Error de base de datos");
+        }
+        return bill_id;
+    }
+
+    public void insertBillDetail(long id_bill, String idProduct, String amount) {
+        try {
+
+            String query = "INSERT INTO bill_detail(id_bill, id_product,"
+                    + " amount)"
+                    + " VALUES ('" + id_bill + "',"
+                    + " '" + idProduct + "', '" + amount + "');";
+
+            PreparedStatement sqlquery = cursor.prepareStatement(query);
+            sqlquery.executeUpdate();
             JOptionPane.showMessageDialog(null, "Articulo agregado!");
         } catch (SQLException e) {
             System.out.print(e);

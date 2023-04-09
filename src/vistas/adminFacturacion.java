@@ -469,10 +469,27 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
         String empleado = "0101";
         String method = "efectivo";
         String type = "contado";
-        this.factura.insertBill(store, cedula,
+        long idFactura = this.factura.insertBill(store, cedula,
                 empleado, method, type);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
+        for (int i = 0; i < jt_factura.getRowCount(); i++) {
+            String productCode = jt_factura.getValueAt(i, 0).toString();
+            String cantidad = jt_factura.getValueAt(i, 2).toString();
+            ResultSet res = this.articulo.getArticulo(productCode);
+            try {
+                if (res.next()) {
+                    String id_product = res.getString("id");
+                    System.out.print(id_product);
+                    this.factura.insertBillDetail(idFactura, id_product, cantidad);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+//            System.out.print(idFactura);
+        }
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField artticulo_desc;
