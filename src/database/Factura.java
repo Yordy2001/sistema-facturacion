@@ -103,7 +103,6 @@ public class Factura {
             rs.next();
             //Get id from factura that generate before 
             bill_id = rs.getLong(1);
-            JOptionPane.showMessageDialog(null, "Articulo agregado!");
             return bill_id;
 
         } catch (SQLException e) {
@@ -123,7 +122,6 @@ public class Factura {
 
             PreparedStatement sqlquery = cursor.prepareStatement(query);
             sqlquery.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Articulo agregado!");
         } catch (SQLException e) {
             System.out.print(e);
             JOptionPane.showMessageDialog(null, "Error de base de datos");

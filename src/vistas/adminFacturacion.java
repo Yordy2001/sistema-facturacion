@@ -488,6 +488,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
 
 //            System.out.print(idFactura);
         }
+        JOptionPane.showMessageDialog(null, "Factura realizada");
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
