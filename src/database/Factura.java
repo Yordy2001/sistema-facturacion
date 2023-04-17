@@ -1,10 +1,14 @@
 package database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -89,13 +93,15 @@ public class Factura {
         String idEmpleado = getIdEmpleado(id_empleado);
         String idPaidMethod = getPaidMethod(paid_method);
         String idType = getIdBillType(type);
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
         try {
 
             String query = "INSERT INTO bill(id_store, id_customer,"
-                    + " id_empleado, paid_method, `type`)"
+                    + " id_empleado, paid_method, `type`,fecha )"
                     + " VALUES ('" + idStore
                     + "', '" + idCustomer + "',"
-                    + " '" + idEmpleado + "', '" + idPaidMethod + "', '" + idType + "');";
+                    + " '" + idEmpleado + "', '" + idPaidMethod + "', '" + idType + "', '" + dateFormat.format(cal.getTime()) + "');";
 
             PreparedStatement sqlquery = cursor.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             sqlquery.executeUpdate();
