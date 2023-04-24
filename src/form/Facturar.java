@@ -100,20 +100,58 @@ public class Facturar extends javax.swing.JFrame {
         txtCode.requestFocus();
     }
 
-    private void fillArticuloDesc() {
+    private void fillArticuloDesc() throws SQLException {
         String code = txtCode.getText();
         if (txtCode.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "CAMPO CODIGO EN BLANCO");
         }
         ResultSet res = this.articulo.getArticulo(code);
-        try {
-            if (res.next()) {
-                artticuloDesc.setText(res.getString("name"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+        if (res.next()) {
+            artticuloDesc.setText(res.getString("name"));
         }
         txtCantidad.requestFocus();
+    }
+
+    private void saveBill() {
+        String store = "pc-master";
+        String cedula = txtCedula.getText();
+        String empleado = "0101";
+        String method = metodoPago.getItemAt(metodoPago.getSelectedIndex());
+        String type = billType.getItemAt(billType.getSelectedIndex());
+
+        //Get factura id after create one        
+        long idFactura = this.factura.insertBill(store, cedula,
+                empleado, method, type);
+
+        //Insert Factura details        
+        for (int i = 0; i < jt_factura.getRowCount(); i++) {
+            String productCode = jt_factura.getValueAt(i, 0).toString();
+            String cantidad = jt_factura.getValueAt(i, 2).toString();
+            ResultSet res = this.articulo.getArticulo(productCode);
+            try {
+                if (res.next()) {
+                    String id_product = res.getString("id");
+                    this.factura.insertBillDetail(idFactura, id_product, cantidad);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Factura realizada");
+    }
+
+    private void UpdateProductStock() throws SQLException {
+        for (int i = 0; i < jt_factura.getRowCount(); i++) {
+            String code = jt_factura.getValueAt(i, 0).toString();
+
+            ResultSet res = this.articulo.getArticulo(code);
+            if (res.next()) {
+                int cantidad = Integer.parseInt(jt_factura.getValueAt(i, 2).toString());
+                int stock = Integer.parseInt(res.getString("cantidad"));
+                int newStock = stock - cantidad;
+                this.articulo.updateArticuloStock(code, newStock);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -672,7 +710,11 @@ public class Facturar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbBuscarCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarCodeActionPerformed
-        fillArticuloDesc();
+        try {
+            fillArticuloDesc();
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbBuscarCodeActionPerformed
 
     private void txtDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDireccionActionPerformed
@@ -716,7 +758,6 @@ public class Facturar extends javax.swing.JFrame {
         try {
             res.next();
             int stock = Integer.parseInt(res.getString("cantidad"));
-            System.out.print(stock);
             if (cantidad > stock || stock <= 0) {
                 JOptionPane.showMessageDialog(null, "Producto insuficiente cantidad: " + stock);
                 txtCantidad.requestFocus();
@@ -730,7 +771,11 @@ public class Facturar extends javax.swing.JFrame {
 
 
     private void txtCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodeActionPerformed
-        fillArticuloDesc();
+        try {
+            fillArticuloDesc();
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_txtCodeActionPerformed
 
     private void artticuloDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artticuloDescActionPerformed
@@ -761,28 +806,8 @@ public class Facturar extends javax.swing.JFrame {
     }//GEN-LAST:event_subtotalActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        String store = "pc-master";
-        String cedula = txtCedula.getText();
-        String empleado = "0101";
-        String method = metodoPago.getItemAt(metodoPago.getSelectedIndex());
-        String type = billType.getItemAt(billType.getSelectedIndex());
-        long idFactura = this.factura.insertBill(store, cedula,
-                empleado, method, type);
+        saveBill();
 
-        for (int i = 0; i < jt_factura.getRowCount(); i++) {
-            String productCode = jt_factura.getValueAt(i, 0).toString();
-            String cantidad = jt_factura.getValueAt(i, 2).toString();
-            ResultSet res = this.articulo.getArticulo(productCode);
-            try {
-                if (res.next()) {
-                    String id_product = res.getString("id");
-                    this.factura.insertBillDetail(idFactura, id_product, cantidad);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        JOptionPane.showMessageDialog(null, "Factura realizada");
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -790,7 +815,11 @@ public class Facturar extends javax.swing.JFrame {
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbImprimirActionPerformed
-        // TODO add your handling code here:
+        try {
+            UpdateProductStock();
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbImprimirActionPerformed
 
     private void JbCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCobrarActionPerformed

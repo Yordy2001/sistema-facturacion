@@ -186,4 +186,19 @@ public class Articulo {
         return categoryId;
     }
 
+    public void updateArticuloStock(String code, int newStock) {
+        try {
+            String query = "UPDATE articulos SET cantidad='" + newStock + "' where code='" + code + "'";
+            PreparedStatement sqlquery;
+            sqlquery = cursor.prepareStatement(query);
+            int n = sqlquery.executeUpdate(query);
+            if (n != 1) {
+                JOptionPane.showMessageDialog(null, "CREDENCIALES INVALIDAS!");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "ERROR: COMUNIQUESE CON UN TECNICO");
+        }
+    }
+
 }
