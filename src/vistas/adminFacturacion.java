@@ -8,10 +8,20 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import report.lista_articulos;
 //import java.lang.Double;
 
 public class adminFacturacion extends javax.swing.JInternalFrame {
@@ -35,6 +45,7 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
             cb_type.addItem(i);
         }
     }
+
 
     private void calcularTotal() {
         DecimalFormat format = new DecimalFormat("#,###.##");
@@ -485,11 +496,9 @@ public class adminFacturacion extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(adminFacturacion.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-//            System.out.print(idFactura);
         }
         JOptionPane.showMessageDialog(null, "Factura realizada");
-
+ 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -8,10 +8,20 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import report.lista_articulos;
 import vistas.adminFacturacion;
 
 public class Facturar extends javax.swing.JFrame {
@@ -34,10 +44,40 @@ public class Facturar extends javax.swing.JFrame {
         this.articulo = new Articulo(cn);
         this.factura = new Factura(cn);
         this.customer = new Customer(cn);
+        txtVendedor.setText("Yon");
+    }
+
+    private void printBill() throws JRException {
+        DecimalFormat format = new DecimalFormat("#,###,###.##");
+
+        ArrayList articulos = new ArrayList();
+
+        for (int i = 0; i < jt_factura.getRowCount(); i++) {
+            lista_articulos fact = new lista_articulos(jt_factura.getValueAt(i, 1) + "", jt_factura.getValueAt(i, 2) + "", jt_factura.getValueAt(i, 3) + "", jt_factura.getValueAt(i, 4) + "", jt_factura.getValueAt(i, 5) + "", jt_factura.getValueAt(i, 6) + "");
+            articulos.add(fact);
+        }
+
+        JasperReport jr = null;
+        jr = (JasperReport) JRLoader.loadObjectFromFile("src/report/reporte_factura.jasper");
+        HashMap parametro = new HashMap();
+        parametro.put("clientname", "Yordy Ramirez");
+        parametro.put("billid", "N*120225");
+        parametro.put("billtype", metodoPago.getItemAt(billType.getSelectedIndex()));
+        parametro.put("itbis", itbis.getText());
+        parametro.put("subtotal", subtotal.getText());
+        parametro.put("total", total.getText());
+        parametro.put("descuentototal", descuento.getText());
+        parametro.put("clientedireccion", txtDireccion.getText());
+        parametro.put("vendedor", txtVendedor.getText());
+        parametro.put("devolucion", textDebuelta.getText());
+        parametro.put("pago", textPago.getText());
+        JasperPrint jp = JasperFillManager.fillReport(jr, parametro, new JRBeanCollectionDataSource(articulos));
+        JasperViewer jv = new JasperViewer(jp, false);
+        jv.setVisible(true);
     }
 
     private void calcularTotal() {
-        DecimalFormat format = new DecimalFormat("#,###.##");
+        DecimalFormat format = new DecimalFormat("#,###,###.##");
         DefaultTableModel tableData = (DefaultTableModel) jt_factura.getModel();
         double total1 = 0.0;
         double total_itbis = 0.0;
@@ -807,6 +847,11 @@ public class Facturar extends javax.swing.JFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         saveBill();
+        try {
+            UpdateProductStock();
+        } catch (SQLException ex) {
+            Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -816,14 +861,14 @@ public class Facturar extends javax.swing.JFrame {
 
     private void jbImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbImprimirActionPerformed
         try {
-            UpdateProductStock();
-        } catch (SQLException ex) {
+            printBill();
+        } catch (JRException ex) {
             Logger.getLogger(Facturar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbImprimirActionPerformed
 
     private void JbCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbCobrarActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "En proceso...");
     }//GEN-LAST:event_JbCobrarActionPerformed
 
     private void textPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPagoActionPerformed

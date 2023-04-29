@@ -1,14 +1,16 @@
 package form;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import vistas.adminFacturacion;
 import vistas.admin_articulos;
 import vistas.admin_customer;
 import vistas.admin_empleados;
 
 public class admin extends javax.swing.JFrame {
-    
+
     JInternalFrame internatView;
+
     public admin() {
         initComponents();
         this.setResizable(false);
@@ -121,6 +123,11 @@ public class admin extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("REPORTE");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(0, 153, 204));
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -139,6 +146,11 @@ public class admin extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
         jButton7.setText("LISTADO DE EXISTENCIA");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         salir.setBackground(new java.awt.Color(255, 153, 51));
         salir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -230,13 +242,14 @@ public class admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new register().setVisible(true);
-        this.dispose();
+        JOptionPane.showMessageDialog(this, "Caracteristica en proceso");
+//        new register().setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         adminFacturacion interFactura = new adminFacturacion();
-        if(internatView != null){
+        if (internatView != null) {
             internatView.setVisible(false);
         }
         internatView = interFactura;
@@ -246,7 +259,7 @@ public class admin extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         admin_customer interCustomer = new admin_customer();
-        if(internatView != null){
+        if (internatView != null) {
             internatView.setVisible(false);
         }
         internatView = interCustomer;
@@ -260,7 +273,7 @@ public class admin extends javax.swing.JFrame {
 
     private void btn_empleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_empleadosActionPerformed
         admin_empleados interEmpleado = new admin_empleados();
-        if(internatView != null){
+        if (internatView != null) {
             internatView.setVisible(false);
         }
         internatView = interEmpleado;
@@ -270,13 +283,21 @@ public class admin extends javax.swing.JFrame {
 
     private void btn_articulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_articulosActionPerformed
         admin_articulos interArticulos = new admin_articulos();
-        if(internatView != null){
+        if (internatView != null) {
             internatView.setVisible(false);
         }
         internatView = interArticulos;
         jP_interform.add(internatView);
         interArticulos.setVisible(true);
     }//GEN-LAST:event_btn_articulosActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        JOptionPane.showMessageDialog(this, "Caracteristica en proceso");
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JOptionPane.showMessageDialog(this, "Caracteristica en proceso");
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

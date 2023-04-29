@@ -33,7 +33,7 @@ public class admin_empleados extends javax.swing.JInternalFrame {
     }
 
     public void fillComboBox() {
-        String[] permisos = {"SUP.ALMACEN", "GERENTE", "SUPERVISOR", "CONTADOR", "CAJERA"};
+        String[] permisos = {"SUP.ALMACEN", "GERENTE", "SUPERVISOR", "CONTADOR", "CAJERA","U"};
         for (int i = 0; i < 5; i++) {
             cb_cargo.addItem(permisos[i]);
         }
